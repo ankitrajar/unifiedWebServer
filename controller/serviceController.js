@@ -9,21 +9,20 @@ router.get("/",(req,res) => {
     });
 });
 
-router.post("/",(req,res) => {
+router.post("/",async (req,res) => {
     if(req.body._id == ""){
-        insertRecord(req,res);
+        await insertRecord(req,res);
     }
     else{
-        updateRecord(req,res);
+        await updateRecord(req,res);
     }
 });
 
-function insertRecord(req,res)
+async function insertRecord(req,res)
 {
    var service = new Service();
    service.serviceName = req.body.serviceName;
-
-   service.save((err,doc) => {
+    await service.save((err,doc) => {
        if(!err){
         res.redirect('admin/list');
        }
@@ -40,9 +39,9 @@ function insertRecord(req,res)
    });
 }
 
-function updateRecord(req,res)
+async function updateRecord(req,res)
 {
-    Service.findOneAndUpdate({_id:req.body._id,},req.body,{new:true},(err,doc) => {
+    await Service.findOneAndUpdate({_id:req.body._id,},req.body,{new:true},(err,doc) => {
         if(!err){
             res.redirect('admin/list');
         }
@@ -61,8 +60,8 @@ function updateRecord(req,res)
     });
 }
 
-router.get('/list',(req,res) => {
-    Service.find((err,docs) => {
+router.get('/list', async (req,res) => {
+    await Service.find((err,docs) => {
         if(!err) {
             res.render("admin/list",{
                list:docs
@@ -71,8 +70,8 @@ router.get('/list',(req,res) => {
     });
 });
 
-router.get('/:id',(req,res) => {
-    Service.findById(req.params.id,(err,doc) => {
+router.get('/:id', async (req,res) => {
+    await Service.findById(req.params.id,(err,doc) => {
         if(!err){
             res.render("admin/addOrEdit",{
                 viewTitle: "Update Service",
@@ -82,8 +81,8 @@ router.get('/:id',(req,res) => {
     });
 });
 
-router.get('/delete/:id',(req,res) => {
-    Service.findByIdAndRemove(req.params.id,(err,doc) => {
+router.get('/delete/:id', async (req,res) => {
+    await Service.findByIdAndRemove(req.params.id,(err,doc) => {
         if(!err){
             res.redirect('/admin/list');
         }

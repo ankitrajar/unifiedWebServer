@@ -1,7 +1,11 @@
+<style>
+h3 {
+    font-family: Arial, Helvetica, sans-serif;
+	font-size: 30px;
+    text-align: center;
+}
+</style>
 <h3>
-    <a href="/admin" class="btn btn-danger">
-        <i class="fa fa-plus"> </i> Create New
-    </a>
     Service List
 </h3>
 <table class="table table-striped">
@@ -19,12 +23,16 @@
                         <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
                     </a>
                     <a href="/admin/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record?');">
-                        <i class="fa fa-trash fa-lg" aria-hidden="true">
-                         
-                        </i>
+                        <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
                     </a>
                 </td>
             </tr>
         {{/each}}
     </tbody>
 </table>
+<a href="/admin" class="btn btn-danger">
+    <i class="fa fa-plus"> </i> Create New Service
+</a>
+<a href="/" class="btn btn-danger">
+    Logout
+</a>

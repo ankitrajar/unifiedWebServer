@@ -4,8 +4,9 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const expressHandlebars = require('express-handlebars');
 const serviceController = require('./controller/serviceController');
+const loginController = require('./controller/loginController');
 
-var app = express();
+const app = express();
 
 app.use(bodyParser.urlencoded({
     extended:true
@@ -13,13 +14,19 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-app.set('views',path.join(__dirname,'/views/'))
+app.use(function (error, req, res, next) {
+    if(error instanceof SyntaxError){
+        return res.status(400).send('ERROR 400: Bad Request!!!');
+      } 
+    next();
+});
 
+app.set('views',path.join(__dirname,'/views/'));
 app.engine('hbs',expressHandlebars({
     extname:'hbs',
     defaultLayout:'mainLayout',
     layoutsDir:__dirname + '/views/layouts/'
-}))
+}));
 
 app.set('view engine','hbs');
 
@@ -29,3 +36,5 @@ app.listen(port,(err) => {
 });
 
 app.use('/admin',serviceController);
+app.use('/',loginController);
+app.use('/login',loginController);
