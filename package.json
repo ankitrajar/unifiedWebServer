@@ -1,10 +1,10 @@
 {
-  "name": "employee",
+  "name": "unifiedWebServer",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "uws_main.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon uws_main.js"
   },
   "keywords": [],
   "author": "",

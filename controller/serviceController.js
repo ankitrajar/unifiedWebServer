@@ -5,14 +5,13 @@ const router = express.Router();
 
 router.get("/",(req,res) => {
     res.render("admin/addOrEdit",{
-        viewTitle:"Insert Service"
+        viewTitle:"Add Service"
     });
 });
 
 router.post("/",(req,res) => {
-    if(req.body._id == "")
-    {
-    insertRecord(req,res);
+    if(req.body._id == ""){
+        insertRecord(req,res);
     }
     else{
         updateRecord(req,res);
@@ -32,7 +31,7 @@ function insertRecord(req,res)
           if(err.name == "ValidationError"){
               handleValidationError(err,req.body);
               res.render("admin/addOrEdit",{
-                  viewTitle:"Insert Service",
+                  viewTitle:"Add Service",
                   service:req.body
               });
           }
@@ -48,8 +47,7 @@ function updateRecord(req,res)
             res.redirect('admin/list');
         }
         else{
-            if(err.name == "ValidationError")
-            {
+            if(err.name == "ValidationError") {
                 handleValidationError(err,req.body);
                 res.render("admin/addOrEdit",{
                     viewTitle:'Update Service',
@@ -60,7 +58,7 @@ function updateRecord(req,res)
                 console.log("Error occured in Updating the records" + err);
             }
         }
-    })
+    });
 }
 
 router.get('/list',(req,res) => {

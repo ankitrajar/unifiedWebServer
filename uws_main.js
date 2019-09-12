@@ -23,9 +23,9 @@ app.engine('hbs',expressHandlebars({
 
 app.set('view engine','hbs');
 
-const port = process.env.PORT || 3000;
-app.listen(port,() => {
-    console.log(`Server is listening on Port ${port}`);
+const port = process.env.PORT || 5000;
+app.listen(port,(err) => {
+        console.log(`Server is listening on Port ${port}`);
 });
 
 app.use('/admin',serviceController);
