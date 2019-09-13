@@ -17,11 +17,17 @@ async function addUser(req,res) {
    var login = new Login();
    login.userName = req.body.userName;
    login.adminPassword = req.body.adminPassword;
+   try{
+       login.validate();
+   }catch(ex){
+       console.log(ex.message);
+   }
     await login.save((err,doc) => {
        if(!err){
         res.redirect('admin/');
        }
        else{
+        
           if(err.name == "ValidationError" ){
               handleValidationError(err,req.body);
               res.render("login/adminLogin",{
