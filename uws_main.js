@@ -3,18 +3,21 @@ require('rootpath')();
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const errorHandler = require('helpers/error-handler');
 const expressHandlebars = require('express-handlebars');
 const serviceController = require('controller/serviceController');
-const loginController = require('controller/loginController');
+const adminController = require('./controller/adminController');
+const jwt = require('./helpers/jwt');
 
 const app = express();
 
-app.use(bodyParser.urlencoded({
-    extended:true
-}));
-
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
+
+// use JWT auth to secure the api
+app.use(jwt());
 
 app.set('views',path.join(__dirname,'/views/'));
 app.engine('hbs',expressHandlebars({
@@ -25,10 +28,8 @@ app.engine('hbs',expressHandlebars({
 
 app.set('view engine','hbs');
 
-
-app.use('/',loginController);
-app.use('/admin',serviceController);
-//app.use('/login',loginController);
+app.use('/admin',adminController);
+app.use('/service',serviceController);
 
 //Global error handler
 app.use(errorHandler);

@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const url = "mongodb://localhost:27017/serviceDB";
+const config = require('config');
 
-mongoose.connect(url,{useNewUrlParser:true, useFindAndModify: false},(err) => {
-    if(!err){ console.log("MongoDB Connection Succeeded");}
-    else{
-        console.log("An Error Occured");
-    } 
-});
+mongoose.connect(process.env.MONGODB_URL || config.get('connectionString'), { useCreateIndex: true, useNewUrlParser: true });
+mongoose.Promise = global.Promise;
 
-require('./service.model');
+module.exports = {
+    User: require('../models/user.model'),
+    Admin: require('../models/admin.model'),
+    Service: require('../models/service.model')
+};
