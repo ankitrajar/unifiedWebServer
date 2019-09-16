@@ -1,6 +1,6 @@
 <h3>{{viewTitle}}<hr></hr></h3>
 
-    <form action="/admin" method="POST" autocomplete="off">
+    <form action="/service" method="POST" autocomplete="off">
         <input type="hidden" name="_id" value="{{service._id}}">
         <div class="form-group">
             <label>Service Name</label>
@@ -12,7 +12,7 @@
 
         <div class="form-group">
             <button type="submit" class="btn btn-info"><i class="fa fa-database"></i> Submit</button>
-            <a href="/admin/list" class="btn btn-danger">
+            <a href="/service/list" class="btn btn-danger">
                 <i class="fa fa-list-alt"></i> View All
             </a>
             <a href="/" class="btn btn-danger"> Logout </a>

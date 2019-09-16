@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const adminSchema = new Schema({
+const Admin = mongoose.model('Admin', new Schema({
     username: { type: String, unique: true, required: true },
     hash: { type: String, required: true },
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
+    //firstName: { type: String, required: true },
+    //lastName: { type: String, required: true },
     createdDate: { type: Date, default: Date.now }
-});
+}).set('toJSON', { virtuals: true }));
 
-adminSchema.set('toJSON', { virtuals: true });
-mongoose.model('Admin',adminSchema);
+exports.Admin = Admin;

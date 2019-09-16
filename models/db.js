@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const config = require('config');
 
-mongoose.connect(process.env.MONGODB_URL || config.get('connectionString'), { useCreateIndex: true, useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URL || config.get('connectionString'), { useCreateIndex: true, useNewUrlParser: true, useFindAndModify: false });
 mongoose.Promise = global.Promise;
 
 module.exports = {

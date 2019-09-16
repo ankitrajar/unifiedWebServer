@@ -1,9 +1,8 @@
-  
 const config = require('config');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const db = require('models/db');
-const Admin = db.Admin;
+const mongoose = require('mongoose');
+const{Admin} = require('../models/admin.model');
 
 module.exports = {
     authenticate,
@@ -15,7 +14,9 @@ module.exports = {
 };
 
 async function authenticate({ username, password }) {
+    console.log(username);
     const AdminUser = await Admin.findOne({ username });
+    console.log(AdminUser);
     if (AdminUser && bcrypt.compareSync(password, AdminUser.hash)) {
         const { hash, ...AdminUserWithoutHash } = AdminUser.toObject();
         const token = jwt.sign({ sub: AdminUser.id }, config.get('secret'));

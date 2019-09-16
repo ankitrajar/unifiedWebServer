@@ -19,10 +19,10 @@ h3 {
             <tr>
                 <td>{{this.serviceName}}</td>
                 <td>
-                    <a href="/admin/{{this._id}}">
+                    <a href="/service/{{this._id}}">
                         <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
                     </a>
-                    <a href="/admin/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record?');">
+                    <a href="/service/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record?');">
                         <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
                     </a>
                 </td>
@@ -30,7 +30,7 @@ h3 {
         {{/each}}
     </tbody>
 </table>
-<a href="/admin" class="btn btn-danger">
+<a href="/service" class="btn btn-danger">
     <i class="fa fa-plus"> </i> Create New Service
 </a>
 <a href="/" class="btn btn-danger">

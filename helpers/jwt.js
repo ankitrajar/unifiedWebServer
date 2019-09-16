@@ -9,7 +9,12 @@ function jwt() {
         path: [
             // public routes that don't require authentication
             '/user/authenticate',
-            '/user/register'
+            '/user/register',
+            '/admin',
+            '/admin/login',
+            '/service',
+            '/service/list',
+            '/delete/:id'
         ]
     });
 }

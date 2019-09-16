@@ -4,8 +4,8 @@ const Service = mongoose.model('Service');
 const router = express.Router();
 
 router.get("/",(req,res) => {
-    res.render("admin/addOrEdit",{
-        viewTitle:"Add Service"
+    res.render("service/addOrEdit",{
+    viewTitle:"Add Service"
     });
 });
 
@@ -24,12 +24,12 @@ async function insertRecord(req,res)
    service.serviceName = req.body.serviceName;
     await service.save((err,doc) => {
        if(!err){
-        res.redirect('admin/list');
+        res.redirect('service/list');
        }
        else{
           if(err.name == "ValidationError"){
               handleValidationError(err,req.body);
-              res.render("admin/addOrEdit",{
+              res.render("service/addOrEdit",{
                   viewTitle:"Add Service",
                   service:req.body
               });
@@ -43,12 +43,12 @@ async function updateRecord(req,res)
 {
     await Service.findOneAndUpdate({_id:req.body._id,},req.body,{new:true},(err,doc) => {
         if(!err){
-            res.redirect('admin/list');
+            res.redirect('service/list');
         }
         else{
             if(err.name == "ValidationError") {
                 handleValidationError(err,req.body);
-                res.render("admin/addOrEdit",{
+                res.render("service/addOrEdit",{
                     viewTitle:'Update Service',
                     service:req.body
                 });
@@ -63,7 +63,7 @@ async function updateRecord(req,res)
 router.get('/list', async (req,res) => {
     await Service.find((err,docs) => {
         if(!err) {
-            res.render("admin/list",{
+            res.render("service/list",{
                list:docs
             });
         }
@@ -73,9 +73,9 @@ router.get('/list', async (req,res) => {
 router.get('/:id', async (req,res) => {
     await Service.findById(req.params.id,(err,doc) => {
         if(!err){
-            res.render("admin/addOrEdit",{
+            res.render("service/addOrEdit",{
                 viewTitle: "Update Service",
-                admin: doc
+                service: doc
             });
         }
     });
@@ -84,7 +84,7 @@ router.get('/:id', async (req,res) => {
 router.get('/delete/:id', async (req,res) => {
     await Service.findByIdAndRemove(req.params.id,(err,doc) => {
         if(!err){
-            res.redirect('/admin/list');
+            res.redirect('/service/list');
         }
         else{
             console.log("An error occured during the Delete Process" + err);

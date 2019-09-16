@@ -5,7 +5,7 @@ const serviceSchema = new Schema({
     serviceName:{
         type:String,
         required: 'This field is required'
-    },
+    }
 });
 
 serviceSchema.set('toJSON', { virtuals: true });
