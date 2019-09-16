@@ -14,9 +14,8 @@ module.exports = {
 };
 
 async function authenticate({ username, password }) {
-    console.log(username);
     const AdminUser = await Admin.findOne({ username });
-    console.log(AdminUser);
+    if(AdminUser.username === config.get('admin')) {
     if (AdminUser && bcrypt.compareSync(password, AdminUser.hash)) {
         const { hash, ...AdminUserWithoutHash } = AdminUser.toObject();
         const token = jwt.sign({ sub: AdminUser.id }, config.get('secret'));
@@ -25,6 +24,10 @@ async function authenticate({ username, password }) {
             token
         };
     }
+}
+else {
+    throw 'Access Denied!';
+}
 }
 
 async function getAll() {
@@ -45,7 +48,8 @@ async function create(AdminUserParam) {
 
     // hash password
     if (AdminUserParam.password) {
-        AdminUser.hash = bcrypt.hashSync(AdminUserParam.password, 10);
+        const salt = await bcrypt.genSalt(10);
+        AdminUser.hash = await bcrypt.hash(AdminUserParam.password, salt);
     }
 
     // save user
@@ -63,7 +67,7 @@ async function update(id, AdminUserParam) {
 
     // hash password if it was entered
     if (AdminUserParam.password) {
-        AdminUserParam.hash = bcrypt.hashSync(AdminUserParam.password, 10);
+        AdminUserParam.hash = await bcrypt.hash(AdminUserParam.password, 10);
     }
 
     // copy AdminUserParam properties to AdminUser
